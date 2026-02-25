@@ -46,6 +46,7 @@ const [drawerOpen, setDrawerOpen] = useState(false);
           </li>
         ))}
       </Paper>
+
       <Paper component="ul" sx={{...root}}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
@@ -58,6 +59,16 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
+
+      <Paper component="ul" sx={{...root}}>
+        <Chip label="Production Countries" sx={{...chip}} color="primary" />
+        {movie.production_countries.map((p) => (
+          <li key={p.name}>
+            <Chip label={p.name} sx={{...chip}} />
+          </li>
+        ))}
+      </Paper>
+
       <Fab
         color="secondary"
         variant="extended"
