@@ -29,18 +29,19 @@ const [drawerOpen, setDrawerOpen] = useState(false);
       <Typography variant="h5" component="h3">
         Overview
       </Typography>
+      <Paper sx={{ padding: 1.5, marginBottom: 2 }}>
+        <Typography variant="h6" component="p">
+          {movie.overview}
+        </Typography>
+      </Paper>
 
-      <Typography variant="h6" component="p">
-        {movie.overview}
+      <Typography variant="h5" component="h3" sx={{ marginTop: 2 }}>
+        Genres
       </Typography>
-
       <Paper 
         component="ul" 
         sx={{...root}}
       >
-        <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
-        </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
             <Chip label={g.name} sx={{...chip}} />
@@ -48,6 +49,9 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         ))}
       </Paper>
 
+      <Typography variant="h5" component="h3" sx={{ marginTop: 2 }}>
+        Movie Details
+      </Typography>
       <Paper component="ul" sx={{...root}}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
@@ -61,8 +65,10 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
 
+      <Typography variant="h5" component="h3" sx={{ marginTop: 2 }}>
+        Production Countries
+      </Typography>
       <Paper component="ul" sx={{...root}}>
-        <Chip label="Production Countries" sx={{...chip}} color="primary" />
         {movie.production_countries.map((p) => (
           <li key={p.name}>
             <Chip label={p.name} sx={{...chip}} />
