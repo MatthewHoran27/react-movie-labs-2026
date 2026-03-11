@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import MovieCredits from "../movieCredits"
+import MovieRecommendations from "../movieRecommendations";
 
 const root = {
     display: "flex",
@@ -76,7 +77,9 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         ))}
       </Paper>
 
+      {/* Assignment Dynamic Endpoints */}
       <MovieCredits movie={movie} />
+      <MovieRecommendations movie={movie} />
 
       <Fab
         color="secondary"
