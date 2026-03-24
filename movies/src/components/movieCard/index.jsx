@@ -14,14 +14,22 @@ import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
+import Box from "@mui/material/Box";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 export default function MovieCard({ movie, action }) {
-  const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { favorites, addToFavorites, playlist, addToPlaylist } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
     movie.favorite = false
+  }
+
+  if (playlist.find((id) => id === movie.id)) {
+    movie.inPlaylist = true;
+  } else {
+    movie.inPlaylist = false
   }
 
   const handleAddToFavorite = (e) => {
@@ -33,11 +41,18 @@ export default function MovieCard({ movie, action }) {
     <Card>
       <CardHeader
         avatar={
-          movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            {movie.favorite && (
+              <Avatar sx={{ backgroundColor: 'red' }}>
+                <FavoriteIcon />
+              </Avatar>
+            )}
+            {movie.inPlaylist && (
+              <Avatar sx={{ backgroundColor: 'blue' }}>
+                <PlaylistAddIcon />
+              </Avatar>
+            )}
+          </Box>
         }
         title={
           <Typography variant="h5" component="p">

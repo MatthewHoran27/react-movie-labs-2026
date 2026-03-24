@@ -6,7 +6,7 @@ Extend the App
 
 Functionality
     y    -Caching endpoints
-    n    -Similar feature to favourites
+    y    -Similar feature to favourites
     y    -Filtering
     y    -Sorting
 
