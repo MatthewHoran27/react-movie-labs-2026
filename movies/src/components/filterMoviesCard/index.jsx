@@ -1,6 +1,5 @@
 import React, {useState, useEffect}  from "react";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import InputLabel from "@mui/material/InputLabel";
@@ -9,7 +8,8 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
+import Slider from "@mui/material/Slider";
+import Box from "@mui/material/Box";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
@@ -42,16 +42,26 @@ export default function FilterMoviesCard(props) {
   }
 
   const handleChange = (e, type, value) => {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     props.onUserInput(type, value); 
   };
 
-  const handleTextChange = (e, props) => {
+  const handleTextChange = (e) => {
     handleChange(e, "name", e.target.value);
   };
 
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
+  };
+
+  const handleRatingChange = (e, value) => {
+    handleChange(null, "minRating", value);
+  };
+
+  const handleReleaseYearChange = (e) => {
+    handleChange(e, "releaseYear", e.target.value);
   };
 
   return (
@@ -92,18 +102,35 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
-      </CardContent>
-      <CardMedia
-        sx={{ height: 300 }}
-        image={img}
-        title="Filter"
-      />
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
-          <br />
-        </Typography>
+        <TextField
+          sx={{...formControl}}
+          id="release-year"
+          label="Release Year"
+          type="number"
+          variant="filled"
+          inputProps={{ min: "1900", max: new Date().getFullYear() }}
+          value={props.releaseYear}
+          onChange={handleReleaseYearChange}
+        />
+        <Box>
+          <Typography id="rating-slider" variant="body2" sx={{marginBottom: 1, fontWeight: 600}}>
+            Minimum Rating: {props.minRating || "Any"}
+          </Typography>
+          <Slider
+            id="min-rating-slider"
+            aria-labelledby="rating-slider"
+            min={0}
+            max={10}
+            step={0.5}
+            value={Number(props.minRating) || 0}
+            onChange={handleRatingChange}
+            marks={[
+              { value: 0, label: "0" },
+              { value: 5, label: "5" },
+              { value: 10, label: "10" }
+            ]}
+          />
+        </Box>
       </CardContent>
     </Card>
   );
