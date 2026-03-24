@@ -9,6 +9,7 @@ function MovieListPageTemplate({ movies, title, action }) {
   const [genreFilter, setGenreFilter] = useState("0");
   const [minRating, setMinRating] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
+  const [sortBy, setSortBy] = useState("popularity");
   
   const genreId = Number(genreFilter);
 
@@ -27,6 +28,25 @@ function MovieListPageTemplate({ movies, title, action }) {
       if (releaseYear === "") return true;
       const movieYear = m.release_date ? m.release_date.split("-")[0] : "";
       return movieYear === releaseYear;
+    })
+    .sort((a, b) => {
+      switch(sortBy) {
+        case "title":
+          return a.title.localeCompare(b.title);
+        case "title-desc":
+          return b.title.localeCompare(a.title);
+        case "rating":
+          return b.vote_average - a.vote_average;
+        case "rating-asc":
+          return a.vote_average - b.vote_average;
+        case "release-date":
+          return new Date(b.release_date) - new Date(a.release_date);
+        case "release-date-asc":
+          return new Date(a.release_date) - new Date(b.release_date);
+        case "popularity":
+        default:
+          return b.popularity - a.popularity;
+      }
     });
 
   const handleChange = (type, value) => {
@@ -34,6 +54,7 @@ function MovieListPageTemplate({ movies, title, action }) {
     else if (type === "genre") setGenreFilter(value);
     else if (type === "minRating") setMinRating(value);
     else if (type === "releaseYear") setReleaseYear(value);
+    else if (type === "sortBy") setSortBy(value);
   };
 
   return (
@@ -53,6 +74,7 @@ function MovieListPageTemplate({ movies, title, action }) {
             genreFilter={genreFilter}
             minRating={minRating}
             releaseYear={releaseYear}
+            sortBy={sortBy}
           />
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
