@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "@tanstack/react-query";
@@ -6,9 +6,15 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
+import { PageTitleContext } from "../contexts/pageTitleContext";
 
 const FavoriteMoviesPage = () => {
   const {favorites: movieIds } = useContext(MoviesContext);
+  const { setPageTitle } = useContext(PageTitleContext);
+
+  useEffect(() => {
+    setPageTitle("Favorites");
+  }, [setPageTitle]);
 
   // Create an array of queries and run in parallel.
   const favoriteMovieQueries = useQueries({

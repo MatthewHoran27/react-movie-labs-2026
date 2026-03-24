@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -10,11 +10,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router";
 import { styled } from '@mui/material/styles';
+import { PageTitleContext } from "../../contexts/pageTitleContext";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { pageTitle } = useContext(PageTitleContext);
   
   const navigate = useNavigate();
 
@@ -45,11 +47,15 @@ const SiteHeader = () => {
     <>
       <AppBar position="fixed" color="secondary">
         <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1, fontFamily: 'PixelGame' }}>
+          <Typography 
+            variant="h4" 
+            sx={{ flexGrow: 1, fontFamily: 'PixelGame', cursor: 'pointer' }}
+            onClick={() => navigate("/")}
+          >
             MATMDB Client
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1, fontFamily: 'PixelGame' }}>
-            Matthew's Awesome TMDB Client
+            {pageTitle}
           </Typography>
           <IconButton
             aria-label="menu"

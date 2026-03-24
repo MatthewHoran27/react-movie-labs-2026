@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useParams } from 'react-router';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
@@ -6,13 +6,22 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/tmdb-api'
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner'
+import { PageTitleContext } from "../contexts/pageTitleContext";
 
 const MoviePage = (props) => {
   const { id } = useParams();
+  const { setPageTitle } = useContext(PageTitleContext);
+  
   const { data: movie, error, isPending, isError  } = useQuery({
     queryKey: ['movie', {id: id}],
     queryFn: getMovie,
   })
+
+  useEffect(() => {
+    if (movie && movie.title) {
+      setPageTitle(movie.title);
+    }
+  }, [movie, setPageTitle]);
 
   if (isPending) {
     return <Spinner />;

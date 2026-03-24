@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import { PageTitleContext } from "../contexts/pageTitleContext";
 
 const UpcomingMoviesPage = (props) => {
+  const { setPageTitle } = useContext(PageTitleContext);
+
+  useEffect(() => {
+    setPageTitle("Upcoming");
+  }, [setPageTitle]);
 
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['upcoming'],

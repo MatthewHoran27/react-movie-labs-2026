@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateMoviePage";
 import ReviewForm from "../components/reviewForm";
 import { useLocation } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
+import { PageTitleContext } from "../contexts/pageTitleContext";
 
 const WriteReviewPage = (props) => {
   const location = useLocation();
   const movieId = location.state.movieId;
+  const { setPageTitle } = useContext(PageTitleContext);
 
   const { data: movie, error, isLoading, isError } = useQuery({
     queryKey: ['movie', {id: movieId}],
     queryFn: getMovie,
   });
+
+  useEffect(() => {
+    if (movie && movie.title) {
+      setPageTitle(`Add review for ${movie.title}`);
+    }
+  }, [movie, setPageTitle]);
 
   if (isLoading) {
     return <Spinner />;
