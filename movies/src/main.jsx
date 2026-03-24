@@ -13,6 +13,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from './pages/upcomingMoviesPage';
 import PageTitleContextProvider from "./contexts/pageTitleContext";
+import SiteFooter from './components/siteFooter';
 
 // Assignment Page Imports
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
@@ -52,6 +53,7 @@ const App = () => {
               <Route path="/movies/topRated" element={<TopRatedMoviesPage />} />
             </Routes>
           </MoviesContextProvider>
+          <SiteFooter />
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
