@@ -55,7 +55,7 @@ export default function MovieCard({ movie, action }) {
           </Box>
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="h5" component="p" sx={{ overflow: 'hidden', whiteSpace: 'nowrap' }}>
             {movie.title}{" "}
           </Typography>
         }
