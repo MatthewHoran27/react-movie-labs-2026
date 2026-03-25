@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router";
 import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
@@ -15,7 +16,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from './pages/upcomingMoviesPage';
 import PageTitleContextProvider from "./contexts/pageTitleContext";
 import SiteFooter from './components/siteFooter';
-import theme from './theme';
+import { ThemeContextProvider, ThemeContext } from './contexts/themeContext';
 
 // Assignment Page Imports
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
@@ -32,9 +33,12 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => {
+const AppContent = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <PageTitleContextProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
@@ -62,6 +66,14 @@ const App = () => {
       </QueryClientProvider>
     </PageTitleContextProvider>
     </ThemeProvider>
+  );
+};
+
+const App = () => {
+  return (
+    <ThemeContextProvider>
+      <AppContent />
+    </ThemeContextProvider>
   );
 };
 

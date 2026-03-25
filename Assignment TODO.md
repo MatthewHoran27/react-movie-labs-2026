@@ -11,7 +11,7 @@ Functionality
     y    -Sorting
 
 Additional Work
-    n    -Basic styles
-    n    -Style and Layout, New MUI Components
-    n    -One new feature: Pagination, New MUI Components, Extensive layout changes
-    n    -Several new features
+    y    -Basic styles
+    y    -Style and Layout, New MUI Components
+    y    -One new feature: Pagination, New MUI Components, Extensive layout changes
+    y    -Several new features

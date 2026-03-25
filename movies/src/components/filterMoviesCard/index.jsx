@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
@@ -19,10 +20,12 @@ const formControl =
   {
     margin: 1,
     minWidth: "150px",
-    backgroundColor: "rgb(255, 255, 255)"
+    backgroundColor: "transparent"
   };
 
 export default function FilterMoviesCard(props) {
+
+  const theme = useTheme();
 
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['genres'],
@@ -71,7 +74,7 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)",
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[200],
         width: "100%"
       }} 
       variant="outlined">
@@ -93,7 +96,7 @@ export default function FilterMoviesCard(props) {
         id="filled-search"
         label="Search"
         type="search"
-        variant="filled"
+        variant="outlined"
         size="small"
         value={props.titleFilter}
         onChange={handleTextChange}
@@ -122,7 +125,7 @@ export default function FilterMoviesCard(props) {
           id="release-year"
           label="Release Year"
           type="number"
-          variant="filled"
+          variant="outlined"
           size="small"
           inputProps={{ min: "1900", max: new Date().getFullYear() }}
           value={props.releaseYear}

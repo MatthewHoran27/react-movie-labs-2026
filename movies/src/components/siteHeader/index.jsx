@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router";
 import { styled } from '@mui/material/styles';
 import { PageTitleContext } from "../../contexts/pageTitleContext";
+import ThemeSwitcher from "../themeSwitcher";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -57,6 +58,7 @@ const SiteHeader = () => {
           <Typography variant="h6" sx={{ flexGrow: 1, fontFamily: 'PixelGame' }}>
             {pageTitle}
           </Typography>
+          <ThemeSwitcher />
           <IconButton
             aria-label="menu"
             aria-controls="menu-drawer"
