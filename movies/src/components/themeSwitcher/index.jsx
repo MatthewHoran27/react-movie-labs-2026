@@ -2,14 +2,16 @@ import React, { useContext, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Divider from '@mui/material/Divider';
 import PaletteIcon from '@mui/icons-material/Palette';
+import AddIcon from '@mui/icons-material/Add';
 import { ThemeContext } from '../../contexts/themeContext';
+import ThemeEditor from '../themeEditor';
 
 export default function ThemeSwitcher() {
   const { currentThemeName, setTheme, availableThemes, isDarkMode } = useContext(ThemeContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [editorOpen, setEditorOpen] = useState(false);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -23,6 +25,11 @@ export default function ThemeSwitcher() {
   const handleThemeSelect = (themeName) => {
     setTheme(themeName);
     handleClose();
+  };
+
+  const handleOpenEditor = () => {
+    handleClose();
+    setEditorOpen(true);
   };
 
   return (
@@ -59,9 +66,16 @@ export default function ThemeSwitcher() {
             selected={key === currentThemeName}
           >
             {themeConfig.name}
+            {themeConfig.isCustom}
           </MenuItem>
         ))}
+        <Divider />
+        <MenuItem onClick={handleOpenEditor}>
+          <AddIcon sx={{ mr: 1 }} />
+          Create Theme
+        </MenuItem>
       </Menu>
+      <ThemeEditor open={editorOpen} onClose={() => setEditorOpen(false)} />
     </>
   );
 }

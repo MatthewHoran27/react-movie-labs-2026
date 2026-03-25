@@ -1,31 +1,46 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { themes } from '../theme';
+import { themes, createCustomTheme } from '../theme';
 
 export const ThemeContext = createContext();
 
 export const ThemeContextProvider = ({ children }) => {
+  const [availableThemes, setAvailableThemes] = useState(themes);
+
   const [currentThemeName, setCurrentThemeName] = useState(() => {
-    // Try to get saved preference from localStorage
-    const saved = localStorage.getItem('theme-name');
-    if (saved && themes[saved]) {
-      return saved;
-    }
-    // Otherwise check system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     return prefersDark ? 'dark' : 'light';
   });
 
-  useEffect(() => {
-    // Save preference to localStorage
-    localStorage.setItem('theme-name', currentThemeName);
-  }, [currentThemeName]);
-
-  const theme = themes[currentThemeName].theme;
+  const theme = availableThemes[currentThemeName]?.theme;
   const isDarkMode = currentThemeName === 'dark';
 
   const setTheme = (themeName) => {
-    if (themes[themeName]) {
+    if (availableThemes[themeName]) {
       setCurrentThemeName(themeName);
+    }
+  };
+
+  const addCustomTheme = (themeName, themeConfig) => {
+    const updatedThemes = { ...availableThemes };
+    updatedThemes[themeName] = {
+      name: themeConfig.name,
+      theme: createCustomTheme(themeConfig),
+      isCustom: true,
+      config: themeConfig,
+    };
+
+    setAvailableThemes(updatedThemes);
+  };
+
+  const removeCustomTheme = (themeName) => {
+    if (availableThemes[themeName]?.isCustom) {
+      const updatedThemes = { ...availableThemes };
+      delete updatedThemes[themeName];
+      setAvailableThemes(updatedThemes);
+
+      if (currentThemeName === themeName) {
+        setCurrentThemeName('light');
+      }
     }
   };
 
@@ -36,7 +51,9 @@ export const ThemeContextProvider = ({ children }) => {
         theme, 
         isDarkMode, 
         setTheme,
-        availableThemes: themes
+        availableThemes,
+        addCustomTheme,
+        removeCustomTheme,
       }}
     >
       {children}
