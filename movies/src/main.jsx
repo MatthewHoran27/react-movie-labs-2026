@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router";
+import { ThemeProvider } from '@mui/material/styles';
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
@@ -14,6 +15,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from './pages/upcomingMoviesPage';
 import PageTitleContextProvider from "./contexts/pageTitleContext";
 import SiteFooter from './components/siteFooter';
+import theme from './theme';
 
 // Assignment Page Imports
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
@@ -32,12 +34,13 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <PageTitleContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <SiteHeader />
-          <MoviesContextProvider>
-            <Routes>
+    <ThemeProvider theme={theme}>
+      <PageTitleContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <SiteHeader />
+            <MoviesContextProvider>
+              <Routes>
               <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
               <Route path="/movies/playlist" element={<PlaylistMoviesPage />} />
               <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
@@ -58,6 +61,7 @@ const App = () => {
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </PageTitleContextProvider>
+    </ThemeProvider>
   );
 };
 

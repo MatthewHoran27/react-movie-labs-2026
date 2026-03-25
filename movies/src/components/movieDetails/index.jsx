@@ -31,7 +31,7 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         Overview
       </Typography>
       <Paper sx={{ padding: 1.5, marginBottom: 2 }}>
-        <Typography variant="h6" component="p">
+        <Typography variant="body1" component="p">
           {movie.overview}
         </Typography>
       </Paper>
