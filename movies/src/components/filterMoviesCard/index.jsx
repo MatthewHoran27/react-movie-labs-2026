@@ -18,7 +18,7 @@ import Spinner from '../spinner';
 const formControl = 
   {
     margin: 1,
-    minWidth: "90%",
+    minWidth: "150px",
     backgroundColor: "rgb(255, 255, 255)"
   };
 
@@ -71,24 +71,34 @@ export default function FilterMoviesCard(props) {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "rgb(204, 204, 0)",
+        width: "100%"
       }} 
       variant="outlined">
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
+      <CardContent sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 2,
+        padding: "12px 16px",
+        flexWrap: "wrap"
+      }}>
+        <Typography variant="h6" component="h1" sx={{minWidth: "auto", whiteSpace: "nowrap"}}>
+          <SearchIcon fontSize="medium" sx={{verticalAlign: "middle", marginRight: "4px"}} />
+          Filter
         </Typography>
         <TextField
         sx={{...formControl}}
         id="filled-search"
-        label="Search field"
+        label="Search"
         type="search"
         variant="filled"
+        size="small"
         value={props.titleFilter}
         onChange={handleTextChange}
         />
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl, minWidth: "120px"}}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
@@ -96,6 +106,7 @@ export default function FilterMoviesCard(props) {
             defaultValue=""
             value={props.genreFilter}
             onChange={handleGenreChange}
+            size="small"
           >
             {genres.map((genre) => {
               return (
@@ -112,13 +123,14 @@ export default function FilterMoviesCard(props) {
           label="Release Year"
           type="number"
           variant="filled"
+          size="small"
           inputProps={{ min: "1900", max: new Date().getFullYear() }}
           value={props.releaseYear}
           onChange={handleReleaseYearChange}
         />
-        <Box>
-          <Typography id="rating-slider" variant="body2" sx={{marginBottom: 1, fontWeight: 600}}>
-            Minimum Rating: {props.minRating || "Any"}
+        <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: 1}}>
+          <Typography variant="body2" sx={{fontWeight: 600, minWidth: "auto"}}>
+            Min Rating: {props.minRating || "Any"}
           </Typography>
           <Slider
             id="min-rating-slider"
@@ -133,9 +145,10 @@ export default function FilterMoviesCard(props) {
               { value: 5, label: "5" },
               { value: 10, label: "10" }
             ]}
+            sx={{width: "120px"}}
           />
         </Box>
-        <FormControl sx={{...formControl}}>
+        <FormControl sx={{...formControl, minWidth: "180px"}}>
           <InputLabel id="sort-label">Sort By</InputLabel>
           <Select
             labelId="sort-label"
@@ -143,8 +156,9 @@ export default function FilterMoviesCard(props) {
             defaultValue="popularity"
             value={props.sortBy}
             onChange={handleSortChange}
+            size="small"
           >
-            <MenuItem value="popularity">Popularity (High to Low)</MenuItem>
+            <MenuItem value="popularity">Popularity</MenuItem>
             <MenuItem value="title">Title (A to Z)</MenuItem>
             <MenuItem value="title-desc">Title (Z to A)</MenuItem>
             <MenuItem value="rating">Rating (High to Low)</MenuItem>
