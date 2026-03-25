@@ -2,7 +2,7 @@ Extend the App
     y    -3 Static Endpoints
     y    -1 Parameterised Endpoint
     y    -Multiple Parameterised Endpoints
-    n    -Extensive linking
+    y    -Extensive linking
 
 Functionality
     y    -Caching endpoints

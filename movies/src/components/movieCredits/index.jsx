@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import useMovieCredits from "../../hooks/useMovieCredits";
 import Spinner from '../spinner'
+import { useNavigate } from "react-router";
 
 const root = {
   display: "flex",
@@ -16,6 +17,7 @@ const root = {
 const chip = { margin: 0.5 };
 
 const MovieCredits = ({ movie }) => {
+  const navigate = useNavigate();
   const { data, error, isPending, isError } = useMovieCredits(movie.id);
 
   if (isPending) {
@@ -38,8 +40,11 @@ const MovieCredits = ({ movie }) => {
           <li key={c.id}>
             <Chip
               label={`${c.name} as ${c.character}`}
+              onClick={() => navigate(`/actor/${c.id}`)}
               sx={{
-                ...chip
+                ...chip,
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.8 }
               }}
             />
           </li>
@@ -54,8 +59,11 @@ const MovieCredits = ({ movie }) => {
           <li key={`${c.id}-${c.job}`}>
             <Chip
               label={`${c.name} (${c.job})`}
+              onClick={() => navigate(`/crew/${c.id}`)}
               sx={{
-                ...chip
+                ...chip,
+                cursor: 'pointer',
+                '&:hover': { opacity: 0.8 }
               }}
             />
           </li>
